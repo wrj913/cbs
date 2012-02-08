@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>使用Ajax实现三级级联菜单获取区号与邮政编码</title>
+<style type="text/css">
+select,d,dl{
+   font-size: 12px;
+}
+
+.zipcode {
+  color:#333;
+}
+
+.zipcode dl {
+  float: left;
+  padding:4px;
+  padding-top:8px; 
+}
+
+.zipcode dd{
+  padding:4px;
+}
+
+.zipcode select {
+  width:160px;
+}
+</style>
+<script type="text/javascript" src="./tpl/resources/scripts/fun.js"></script>
+</head>
+<body>
+	<?php 
+$host = "localhost";
+$user = "root";
+$pass = "eduask";
+mysql_connect($host,$user,$pass);
+$sql = "SELECT provinceid,province from provinces";
+$res = mysql_db_query("xmlinfo",$sql);
+
+?>
+<form class="myFrm" action="">
+    <dl>
+        <dd><h4>邮编区号查询</h4></dd>
+        <dd>
+            <select id="selectProvince" onchange="addSelect(this.value,'selectCity',1);">
+                <option value="">--请选择--</option>
+                
+             <{section loop=$data name="ls"}>
+								
+                <option value="<{$data[ls].id}>"><{$data[ls].pro_name}></option>
+             <{/section}> 
+            </select>
+        </dd>
+        <dd>
+            <select id="selectCity"  onchange="addSelect(this.value,'selectArea',2);">
+                <option value="">--------</option>
+            </select>
+        </dd>
+        <dd>
+            <select id="selectArea" onchange="addSelect(this.value,'selectStreet',3);">
+                <option value="">--------</option>
+            </select>
+        </dd>
+        <dd>
+            <select id="selectStreet">
+                <option value="">--------</option>
+            </select>
+        </dd>
+    </dl>
+    
+    <div id = "test">ddddd</div>
+</form>
+</body>
+</html>

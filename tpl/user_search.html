@@ -1,0 +1,33 @@
+<table>
+	<thead>
+		<tr>
+			<th><input class="check-all" type="checkbox" /></th>
+			<th>ID</th>
+			<th>邮箱</th>
+			<th>权限</th>
+			<th>编辑</th>
+		</tr>
+	</thead>
+	<tbody>
+		<{section loop=$data name="ls"}>
+		<tr>
+			<td><input type="checkbox" /></td>
+			<td><{$data[ls].id}></td>
+			<td><a href="#" title="title"><{$data[ls].user_email}></a></td>
+			<td><{$data[ls].user_permission}></td>
+			<td><!-- Icons --> <a href="#" title="Edit"><img
+				src="./tpl/resources/images/icons/pencil.png" alt="Edit" /></a> <a
+				href="#" title="Delete"><img
+				src="./tpl/resources/images/icons/cross.png" alt="Delete" /></a> <a
+				href="#" title="Edit Meta"><img
+				src="./tpl/resources/images/icons/hammer_screwdriver.png"
+				alt="Edit Meta" /></a></td>
+		</tr>
+
+		<{sectionelse}>
+		<tr>
+			<td colspan="5">没有数据!!!</td>
+		</tr>
+		<{/section}>
+	</tbody>
+</table>
