@@ -1,0 +1,75 @@
+<table>
+
+	<thead>
+		<tr>
+			<th>所属区域</th>
+			<th>类型</th>
+			<th>用户名</th>
+			<th>虚拟IP</th>
+			<th>MAC地址</th>
+			<th>ipqam_ip</th>
+			<th>使用频率</th>
+			<th>deliver</th>
+			<th>来源IP</th>
+			<th>状态</th>
+			<th>登入时间</th>
+			<th>登出时间</th>
+			<th>是否在线</th>
+			<th>编辑</th>
+		</tr>
+
+	</thead>
+
+	<tfoot>
+		<tr>
+			<td colspan="8"></td>
+			<td colspan="6">
+			<div class="pagination"><a href="#" title="First Page">&laquo;
+			First</a><a href="#" title="Previous Page">&laquo; Previous</a> <a
+				href="#" class="number" title="1">1</a> <a href="#" class="number"
+				title="2">2</a> <a href="#" class="number current" title="3">3</a> <a
+				href="#" class="number" title="4">4</a> <a href="#"
+				title="Next Page">Next &raquo;</a><a href="#" title="Last Page">Last
+			&raquo;</a></div>
+			<!-- End .pagination -->
+			<div class="clear"></div>
+			</td>
+		</tr>
+	</tfoot>
+
+	<tbody>
+
+		<{section loop=$data name="ls"}>
+			<tr>
+				<td><{$data[ls].pro_name}> -
+				<{$data[ls].city_name}><{$data[ls].dis_name}></td>
+				<td><{$data[ls].client_type}></td>
+				<td><{$data[ls].username}></td>
+				<td><{$data[ls].vip}></td>
+				<td><{$data[ls].mac}></td>
+				<td><{$data[ls].ipqam_ip}></td>
+				<td><{$data[ls].freq}></td>
+				<td><{$data[ls].deliver_ip}></td>
+				<td><{$data[ls].client_ip}></td>
+				<td><{$data[ls].status}></td>
+				<td><{$data[ls].login_at}></td>
+				<td><{$data[ls].logout_at}></td>
+				<td><{$data[ls].is_online}></td>
+				<td>
+					<!-- Icons --> 
+					<a href="#" title="Edit">
+						<img src="tpl/resources/images/icons/pencil.png" alt="Edit" /></a> 
+					<a href="#" title="Delete">
+						<img src="tpl/resources/images/icons/cross.png" alt="Delete" /></a> 
+					<a href="#" title="Edit Meta">
+						<img src="tpl/resources/images/icons/hammer_screwdriver.png" alt="Edit Meta" /></a></td>
+			</tr>
+		<{sectionelse}>
+		<tr>
+			<td colspan="5">没有数据!!!</td>
+		</tr>
+		<{/section}>
+
+	</tbody>
+
+</table>

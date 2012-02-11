@@ -62,7 +62,8 @@
 				DD_belatedPNG.fix('.png_bg, img, li');
 			</script>
 		<![endif]-->
-		<script type="text/javascript" src="./tpl/resources/scripts/fun.js"></script>
+		<script type="text/javascript" src="./tpl/resources/scripts/area.js"></script>
+		<script type="text/javascript" src="./tpl/resources/scripts/ajax_ipqam.js"></script>
 	</head>
   
 	<body><div id="body-wrapper"> <!-- Wrapper for the radial gradient background -->
@@ -202,52 +203,77 @@
 			
 			<ul class="shortcut-buttons-set">
 				
-				<li><a class="shortcut-button" href="#tab2"><span>
-					<img src="tpl/resources/images/icons/pencil_48.png" alt="icon" /><br />
-					Write an Article
+				<li><a class="shortcut-button shortcut-button_3" href="#tab2"><span>
+					<img src="tpl/resources/images/icons/spreadsheet.png" alt="icon" /><br />
+					终端列表
 				</span></a></li>
 				
-				<li><a class="shortcut-button" href="#"><span>
-					<img src="tpl/resources/images/icons/paper_content_pencil_48.png" alt="icon" /><br />
-					Create a New Page
+				<li><a class="shortcut-button shortcut-button_1" href="#"><span>
+					<img src="tpl/resources/images/icons/add_server.png" alt="icon" /><br />
+					添加IPQAM
 				</span></a></li>
 				
-				<li><a class="shortcut-button" href="#"><span>
-					<img src="tpl/resources/images/icons/image_add_48.png" alt="icon" /><br />
-					Upload an Image
-				</span></a></li>
-				
-				<li><a class="shortcut-button" href="#"><span>
-					<img src="tpl/resources/images/icons/clock_48.png" alt="icon" /><br />
-					Add an Event
+				<li><a class="shortcut-button shortcut-button_2" href="#"><span>
+					<img src="tpl/resources/images/icons/search_server.png" alt="icon" /><br />
+					查询IPQM
 				</span></a></li>
 				
 				<li><a class="shortcut-button" href="#messages" rel="modal"><span>
-					<img src="tpl/resources/images/icons/comment_48.png" alt="icon" /><br />
+					<img src="tpl/resources/images/icons/mail_b.png" alt="icon" /><br />
 					Open Modal
 				</span></a></li>
 				
 			</ul><!-- End .shortcut-buttons-set -->
-			
 			<div class="clear"></div> <!-- End .clear -->
-			
+			<div class="add_search">
+				<form name="ipqam_search_form">
+					IPQAM_IP：<input type="text" name="search_ipqam_ip" id="search_ipqam_ip" value="ipqam_ip" onkeyup="showHint()" /><br /><br />
+					
+						
+									IPQAM区域:
+					
+									<select id="selectProvince" class="small-input" name="province_id"
+										onchange="addSelect(this.value,'selectCity',1);showHint();">
+										<option value="">--请选择--</option>
+								
+										<{section loop=$province_data name="ls"}>
+								
+										<option value="<{$province_data[ls].id}>"><{$province_data[ls].pro_name}></option>
+										<{/section}>
+									</select>
+									<select id="selectCity" class="small-input" name="city_id"
+										onchange="addSelect(this.value,'selectArea',2);showHint();">
+										<option value="">--------</option>
+									</select>
+									<select id="selectArea"  class="small-input" name="dis_id"
+										onchange="addSelect(this.value,'selectStreet',3);showHint();">
+										<option value="">--------</option>
+									</select>
+									<select id="selectStreet" class="small-input" name="str_id" onchange="showHint();">
+										<option value="">--------</option>
+									</select>
+					
+				</form>
+			</div>
 			<div class="content-box"><!-- Start Content Box -->
 				
 				<div class="content-box-header">
 					
 					<h3>IPQAM</h3>
-					
+		<!-- 		
 					<ul class="content-box-tabs">
-						<li><a href="#tab1" class="default-tab">Table</a></li> <!-- href must be unique and match the id of target div -->
+						<li><a href="#tab1" class="default-tab">Table</a></li>
 						<li><a href="#tab2">添加数据</a></li>
 					</ul>
-					
+		 -->				
 					<div class="clear"></div>
 					
 				</div> <!-- End .content-box-header -->
 				
 				<div class="content-box-content">
-					
+					<div id="ipqam_search_div" class="user_search_div">
+						搜索内容
+					</div>
 					<div class="tab-content default-tab" id="tab1"> <!-- This is the target div. id must match the href of this div's tab -->
 						
 						<div class="notification attention png_bg">
@@ -263,12 +289,12 @@
 								<tr>
 								   <th><input class="check-all" type="checkbox" /></th>
 								   <th>ID</th>
+								   <th>所属地区</th>
 								   <th>IP</th>
 								   <th>端口号</th>
 								   <th>是否可用</th>
 								   <th>编辑</th>
 								</tr>
-								
 							</thead>
 						 
 							<tfoot>
@@ -301,6 +327,7 @@
 								<tr>
 									<td><input type="checkbox" /></td>
 									<td><{$data[ls].id}></td>
+									<td><{$data[ls].pro_name}> - <{$data[ls].city_name}> - <{$data[ls].dis_name}></a></td>
 									<td><a href="#" title="title"><{$data[ls].ip}></a></td>
 									<td><{$data[ls].port}></td>
 									<td><{$data[ls].available}></td>
@@ -314,20 +341,6 @@
 								<{sectionelse}>
 									<tr><td colspan="5">没有数据!!!</td></tr>
 								<{/section}> 
-								
-								<tr>
-									<td><input type="checkbox" /></td>
-									<td>Lorem ipsum dolor</td>
-									<td><a href="#" title="title">Sit amet</a></td>
-									<td>Consectetur adipiscing</td>
-									<td>Donec tortor diam</td>
-									<td>
-										<!-- Icons -->
-										 <a href="#" title="Edit"><img src="resources/images/icons/pencil.png" alt="Edit" /></a>
-										 <a href="#" title="Delete"><img src="resources/images/icons/cross.png" alt="Delete" /></a> 
-										 <a href="#" title="Edit Meta"><img src="resources/images/icons/hammer_screwdriver.png" alt="Edit Meta" /></a>
-									</td>
-								</tr>
 								
 							</tbody>
 							
@@ -358,72 +371,35 @@
 								</p>
 		 -->						
 								<p>
-									<label>是否启用</label>
-									<input type="checkbox" name="available" /> 是 <input type="checkbox" name="checkbox2" /> 否
+									<label>是否立即启用</label>
+									<input type="radio" name="available" value="1" /> 是 <input type="radio" name="available" value="0" /> 否
 								</p>
-		<!-- 		
-								<p>
-									<label>Radio buttons</label>
-									<input type="radio" name="radio1" /> This is a radio button<br />
-									<input type="radio" name="radio2" /> This is another radio button
-								</p>
-		-->			
-		<!-- 				
-								<p>
-									<label>IPQAM 所在区域</label>              
-									<select id="select_province" name="province" class="small-input" onchange="addSelect(this.value,'select_city',1);">
-										<option value="">请选择：</option>
-										
-										<{section loop=$province_data name="ls"}>
-											<option  value="<{$province_data[ls].id}>"><{$province_data[ls].pro_name}></option>
-										<{/section}> 
-									</select> 
-								</p>
-								<p> 
-									<select id="select_city"  name="city" class="small-input" onchange="addSelect(this.value,'select_district',2);">
-                						<option value="">--------</option>
-            						</select>
-            					</p>
-            					<p> 
-									<select id="select_district" name="district" class="small-input" onchange="addSelect(this.value,'select_street',3);">
-                						<option value="">--------</option>
-            						</select>
-            					</p>
-            					<p> 
-									<select id="select_street" name="street" class="small-input" >
-                						<option value="">--------</option>
-            						</select>
-            					</p>
-					
-								<p>
-									<label>Textarea with WYSIWYG</label>
-									<textarea class="text-input textarea wysiwyg" id="textarea" name="textfield" cols="79" rows="15"></textarea>
-								</p>
-		-->							
-		
-								 <p>
-							            <select id="selectProvince" onchange="addSelect(this.value,'selectCity',1);">
-							                <option value="">--请选择--</option>
-							              <{section loop=$province_data name="ls"}>
-							                <option value="<{$province_data[ls].id}>"><{$province_data[ls].pro_name}></option>
-							             <{/section}>
-							            </select>
-							        							</p>
-							       <p>
-							            <select id="selectCity"  onchange="addSelect(this.value,'selectArea',2);">
-							                <option value="">--------</option>
-							            </select>
-							       </p>
-							       <p>
-							            <select id="selectArea" onchange="addZipCode(this.value);">
-							                <option value="">--------</option>
-							            </select>
-							       </p>	
-								<p>
-									<input  name="Submit" class="button" type="submit" value="确定" />
-								</p>
+
+									<label>IPQAM区域</label>
+									<select id="selectProvince" class="small-input" name="province_id"
+										onchange="addSelect(this.value,'selectCity',1);">
+										<option value="">--请选择--</option>
 								
-							</fieldset>
+										<{section loop=$province_data name="ls"}>
+								
+										<option value="<{$province_data[ls].id}>"><{$province_data[ls].pro_name}></option>
+										<{/section}>
+									</select>
+									<select id="selectCity" class="small-input" name="city_id"
+										onchange="addSelect(this.value,'selectArea',2);">
+										<option value="">--------</option>
+									</select>
+									<select id="selectArea"  class="small-input" name="dis_id"
+										onchange="addSelect(this.value,'selectStreet',3);">
+										<option value="">--------</option>
+									</select>
+									<select id="selectStreet" class="small-input" name="str_id">
+										<option value="">--------</option>
+									</select>
+									<p>
+										<input class="button" type="submit" value="确定" />
+									</p>
+								</fieldset>
 							
 							<div class="clear"></div><!-- End .clear -->
 							

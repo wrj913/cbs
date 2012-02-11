@@ -62,7 +62,9 @@
 				DD_belatedPNG.fix('.png_bg, img, li');
 			</script>
 		<![endif]-->
-		
+		<script type="text/javascript" src="./tpl/resources/scripts/ajax_client.js"></script>
+		<script type="text/javascript" src="./tpl/resources/scripts/area.js"></script>
+		<script type="text/javascript" src="./tpl/resources/scripts/ajax_client_count.js"></script>
 	</head>
   
 	<body><div id="body-wrapper"> <!-- Wrapper for the radial gradient background -->
@@ -83,30 +85,24 @@
 			
 			<ul id="main-nav">  <!-- Accordion Menu -->
 				
-				<li>
-					<a href="http://www.google.com/" class="nav-top-item no-submenu"> <!-- Add the class "no-submenu" to menu items with no sub menu -->
-						Dashboard
-					</a>       
-				</li>
-				
 				<li> 
 					<a href="#" class="nav-top-item current"> <!-- Add the class "current" to current menu item -->
 					终端管理
 					</a>
 					<ul>
-						<li><a class="current" href="#">在线终端</a></li>
-						<li><a href="#">用户数量统计</a></li> <!-- Add class "current" to sub menu items also -->
-						<li><a href="#">用户使用统计</a></li>
+						<li><a class="current" href="#">终端列表</a></li>
+						<li><a class="left1" href=" ">用户在线时间统计</a></li> <!-- Add class "current" to sub menu items also -->
+						<li><a class="left2" href=" ">用户登陆次数统计</a></li>
 					</ul>
 				</li>
 				
 				<li>
-					<a href="#" class="nav-top-item">
+					<a href="deliver.php" class="nav-top-item">
 						服务器管理
 					</a>
 					<ul>
-						<li><a href="#">服务器列表</a></li>
-						<li><a href="#">服务器属性列表</a></li>
+						<li><a href="deliver.php">服务器列表</a></li>
+						<li><a href="">服务器属性列表</a></li>
 					</ul>
 				</li>
 				
@@ -136,10 +132,9 @@
 					</a>
 					<ul>
 						<li><a href="user.php">用户列表</a></li>
-						<li><a href="#">设置密码</a></li>
-						<li><a href="#">您的个人资料</a></li>
-						<li><a href="#">用户与权限</a></li>
-						<li><a href="#">区域管理</a></li>
+						<li><a href="">设置密码</a></li>
+						<li><a href="">您的个人资料</a></li>
+						<li><a href="">区域管理</a></li>
 					</ul>
 				</li>      
 				
@@ -205,92 +200,124 @@
 			</noscript>
 			
 			<!-- Page Head -->
-			<h2>Welcome John</h2>
-			<p id="page-intro">What would you like to do?</p>
+			<h2>Welcome <{$user_email}></h2>
+			<p id="page-intro">欢迎使用东方网和数据中心！</p>
 			
 			<ul class="shortcut-buttons-set">
 				
-				<li><a class="shortcut-button" href="#"><span>
-					<img src="tpl/resources/images/icons/pencil_48.png" alt="icon" /><br />
-					Write an Article
+				<li><a class="shortcut-button shortcut-button_3" href="#"><span>
+					<img src="tpl/resources/images/icons/spreadsheet.png" alt="icon" /><br />
+					终端列表
 				</span></a></li>
 				
-				<li><a class="shortcut-button" href="#"><span>
-					<img src="tpl/resources/images/icons/paper_content_pencil_48.png" alt="icon" /><br />
-					Create a New Page
+				<li><a class="shortcut-button shortcut-button_2" href="#"><span>
+					<img src="tpl/resources/images/icons/zoom.png" alt="icon" /><br />
+					搜索
 				</span></a></li>
 				
-				<li><a class="shortcut-button" href="#"><span>
-					<img src="tpl/resources/images/icons/image_add_48.png" alt="icon" /><br />
-					Upload an Image
-				</span></a></li>
-				
-				<li><a class="shortcut-button" href="#"><span>
-					<img src="tpl/resources/images/icons/clock_48.png" alt="icon" /><br />
-					Add an Event
+				<li><a class="shortcut-button left3" href="#"><span>
+					<img src="tpl/resources/images/icons/count.png" alt="icon" /><br />
+					终端数量统计
 				</span></a></li>
 				
 				<li><a class="shortcut-button" href="#messages" rel="modal"><span>
-					<img src="tpl/resources/images/icons/comment_48.png" alt="icon" /><br />
-					Open Modal
+					<img src="tpl/resources/images/icons/mail_b.png" alt="icon" /><br />
+					发邮件
 				</span></a></li>
 				
 			</ul><!-- End .shortcut-buttons-set -->
 			
 			<div class="clear"></div> <!-- End .clear -->
 			
+			<div class="add_search">
+				<form name="client_search_form">
+					终端用户名：<input type="text" name="user_name" id="user_name" value="用户名" onkeyup="showHint()"/><br /><br />
+
+					终端区域:
+					
+					<select id="selectProvince" class="small-input" name="province_id"
+						onchange="addSelect(this.value,'selectCity',1);showHint();">
+						<option value="">--请选择--</option>
+					
+						<{section loop=$province_data name="ls"}>
+					
+						<option value="<{$province_data[ls].id}>"><{$province_data[ls].pro_name}></option>
+						<{/section}>
+					</select>
+					<select id="selectCity" class="small-input" name="city_id"
+						onchange="addSelect(this.value,'selectArea',2);showHint();">
+						<option value="">--------</option>
+					</select>
+					<select id="selectArea" class="small-input" name="dis_id"
+						onchange="addSelect(this.value,'selectStreet',3);showHint();">
+						<option value="">--------</option>
+					</select>
+					<select id="selectStreet" class="small-input" name="str_id"
+						onchange="showHint();">
+						<option value="">--------</option>
+					</select>
+				</form>
+			</div>
+			
 			<div class="content-box"><!-- Start Content Box -->
 				
 				<div class="content-box-header">
 					
-					<h3>Content box</h3>
-					
+					<h3>终端列表</h3>
+				<!-- 	
 					<ul class="content-box-tabs">
-						<li><a href="#tab1" class="default-tab">Table</a></li> <!-- href must be unique and match the id of target div -->
+						<li><a href="#tab1" class="default-tab">Table</a></li>
 						<li><a href="#tab2">Forms</a></li>
 					</ul>
-					
+				 -->	
 					<div class="clear"></div>
 					
 				</div> <!-- End .content-box-header -->
 				
 				<div class="content-box-content">
+				
+					<!-- 搜索显示区 -->
+					<div id="client_search_div" class="user_search_div search_div">
 					
+					</div>
 					<div class="tab-content default-tab" id="tab1"> <!-- This is the target div. id must match the href of this div's tab -->
-						
+					
+					<!-- 最上面的弹出div 
 						<div class="notification attention png_bg">
 							<a href="#" class="close"><img src="resources/images/icons/cross_grey_small.png" title="Close this notification" alt="close" /></a>
 							<div>
 								This is a Content Box. You can put whatever you want in it. By the way, you can close this notification with the top-right cross.
 							</div>
 						</div>
-						
+					-->	
+					
+					<!-- 终端数据表 -->	
 						<table>
 							
 							<thead>
 								<tr>
-								   <th><input class="check-all" type="checkbox" /></th>
-								   <th>Column 1</th>
-								   <th>Column 2</th>
-								   <th>Column 3</th>
-								   <th>Column 4</th>
-								   <th>Column 5</th>
+								   <th>所属区域</th>
+								   <th>类型</th>
+								   <th>用户名</th>
+								   <th>虚拟IP</th>
+								   <th>MAC地址</th>
+								   <th>ipqam_ip</th>
+								   <th>使用频率</th>
+								   <th>deliver</th>
+								   <th>来源IP</th>
+								   <th>状态 </th>
+								   <th>登入时间</th>
+								   <th>登出时间</th>
+								   <th>是否在线</th>
+								   <th>编辑</th>
 								</tr>
 								
 							</thead>
 						 
 							<tfoot>
 								<tr>
+									<td colspan="8"></td>
 									<td colspan="6">
-										<div class="bulk-actions align-left">
-											<select name="dropdown">
-												<option value="option1">Choose an action...</option>
-												<option value="option2">Edit</option>
-												<option value="option3">Delete</option>
-											</select>
-											<a class="button" href="#">Apply to selected</a>
-										</div>
-										
 										<div class="pagination">
 											<a href="#" title="First Page">&laquo; First</a><a href="#" title="Previous Page">&laquo; Previous</a>
 											<a href="#" class="number" title="1">1</a>
@@ -305,117 +332,33 @@
 							</tfoot>
 						 
 							<tbody>
-								<tr>
-									<td><input type="checkbox" /></td>
-									<td>Lorem ipsum dolor</td>
-									<td><a href="#" title="title">Sit amet</a></td>
-									<td>Consectetur adipiscing</td>
-									<td>Donec tortor diam</td>
-									<td>
-										<!-- Icons -->
-										 <a href="#" title="Edit"><img src="resources/images/icons/pencil.png" alt="Edit" /></a>
-										 <a href="#" title="Delete"><img src="resources/images/icons/cross.png" alt="Delete" /></a> 
-										 <a href="#" title="Edit Meta"><img src="resources/images/icons/hammer_screwdriver.png" alt="Edit Meta" /></a>
-									</td>
-								</tr>
-								
-								<tr>
-									<td><input type="checkbox" /></td>
-									<td>Lorem ipsum dolor</td>
-									<td><a href="#" title="title">Sit amet</a></td>
-									<td>Consectetur adipiscing</td>
-									<td>Donec tortor diam</td>
-									<td>
-										<!-- Icons -->
-										 <a href="#" title="Edit"><img src="resources/images/icons/pencil.png" alt="Edit" /></a>
-										 <a href="#" title="Delete"><img src="resources/images/icons/cross.png" alt="Delete" /></a> 
-										 <a href="#" title="Edit Meta"><img src="resources/images/icons/hammer_screwdriver.png" alt="Edit Meta" /></a>
-									</td>
-								</tr>
-								
-								<tr>
-									<td><input type="checkbox" /></td>
-									<td>Lorem ipsum dolor</td>
-									<td><a href="#" title="title">Sit amet</a></td>
-									<td>Consectetur adipiscing</td>
-									<td>Donec tortor diam</td>
-									<td>
-										<!-- Icons -->
-										 <a href="#" title="Edit"><img src="resources/images/icons/pencil.png" alt="Edit" /></a>
-										 <a href="#" title="Delete"><img src="resources/images/icons/cross.png" alt="Delete" /></a> 
-										 <a href="#" title="Edit Meta"><img src="resources/images/icons/hammer_screwdriver.png" alt="Edit Meta" /></a>
-									</td>
-								</tr>
-								
-								<tr>
-									<td><input type="checkbox" /></td>
-									<td>Lorem ipsum dolor</td>
-									<td><a href="#" title="title">Sit amet</a></td>
-									<td>Consectetur adipiscing</td>
-									<td>Donec tortor diam</td>
-									<td>
-										<!-- Icons -->
-										 <a href="#" title="Edit"><img src="resources/images/icons/pencil.png" alt="Edit" /></a>
-										 <a href="#" title="Delete"><img src="resources/images/icons/cross.png" alt="Delete" /></a> 
-										 <a href="#" title="Edit Meta"><img src="resources/images/icons/hammer_screwdriver.png" alt="Edit Meta" /></a>
-									</td>
-								</tr>
-								
-								<tr>
-									<td><input type="checkbox" /></td>
-									<td>Lorem ipsum dolor</td>
-									<td><a href="#" title="title">Sit amet</a></td>
-									<td>Consectetur adipiscing</td>
-									<td>Donec tortor diam</td>
-									<td>
-										<!-- Icons -->
-										 <a href="#" title="Edit"><img src="resources/images/icons/pencil.png" alt="Edit" /></a>
-										 <a href="#" title="Delete"><img src="resources/images/icons/cross.png" alt="Delete" /></a> 
-										 <a href="#" title="Edit Meta"><img src="resources/images/icons/hammer_screwdriver.png" alt="Edit Meta" /></a>
-									</td>
-								</tr>
-								
-								<tr>
-									<td><input type="checkbox" /></td>
-									<td>Lorem ipsum dolor</td>
-									<td><a href="#" title="title">Sit amet</a></td>
-									<td>Consectetur adipiscing</td>
-									<td>Donec tortor diam</td>
-									<td>
-										<!-- Icons -->
-										 <a href="#" title="Edit"><img src="resources/images/icons/pencil.png" alt="Edit" /></a>
-										 <a href="#" title="Delete"><img src="resources/images/icons/cross.png" alt="Delete" /></a> 
-										 <a href="#" title="Edit Meta"><img src="resources/images/icons/hammer_screwdriver.png" alt="Edit Meta" /></a>
-									</td>
-								</tr>
-								
-								<tr>
-									<td><input type="checkbox" /></td>
-									<td>Lorem ipsum dolor</td>
-									<td><a href="#" title="title">Sit amet</a></td>
-									<td>Consectetur adipiscing</td>
-									<td>Donec tortor diam</td>
-									<td>
-										<!-- Icons -->
-										 <a href="#" title="Edit"><img src="resources/images/icons/pencil.png" alt="Edit" /></a>
-										 <a href="#" title="Delete"><img src="resources/images/icons/cross.png" alt="Delete" /></a> 
-										 <a href="#" title="Edit Meta"><img src="resources/images/icons/hammer_screwdriver.png" alt="Edit Meta" /></a>
-									</td>
-								</tr>
-								
-								<tr>
-									<td><input type="checkbox" /></td>
-									<td>Lorem ipsum dolor</td>
-									<td><a href="#" title="title">Sit amet</a></td>
-									<td>Consectetur adipiscing</td>
-									<td>Donec tortor diam</td>
-									<td>
-										<!-- Icons -->
-										 <a href="#" title="Edit"><img src="resources/images/icons/pencil.png" alt="Edit" /></a>
-										 <a href="#" title="Delete"><img src="resources/images/icons/cross.png" alt="Delete" /></a> 
-										 <a href="#" title="Edit Meta"><img src="resources/images/icons/hammer_screwdriver.png" alt="Edit Meta" /></a>
-									</td>
-								</tr>
+	 	 		 	 								
+								<{section loop=$data name="ls"}>
+									<tr>
+										<td><{$data[ls].pro_name}> - <{$data[ls].city_name}><{$data[ls].dis_name}></td>
+										<td><{$data[ls].client_type}></td>
+										<td><{$data[ls].username}></td>
+										<td><{$data[ls].vip}></td>
+										<td><{$data[ls].mac}></td>
+										<td><{$data[ls].ipqam_ip}></td>
+										<td><{$data[ls].freq}></td>
+										<td><{$data[ls].deliver_ip}></td>
+										<td><{$data[ls].client_ip}></td>
+										<td><{$data[ls].status}></td>
+										<td><{$data[ls].login_at}></td>
+										<td><{$data[ls].logout_at}></td>
+										<td><{$data[ls].is_online}></td>
+										<td>
+											<!-- Icons -->
+											 <a href="#" title="Edit"><img src="tpl/resources/images/icons/pencil.png" alt="Edit" /></a>
+											 <a href="#" title="Delete"><img src="tpl/resources/images/icons/cross.png" alt="Delete" /></a> 
+											 <a href="#" title="Edit Meta"><img src="tpl/resources/images/icons/hammer_screwdriver.png" alt="Edit Meta" /></a>
+										</td>
+									</tr>
+								<{sectionelse}>
+									<tr><td colspan="5">没有数据!!!</td></tr>
+								<{/section}> 
+					
 							</tbody>
 							
 						</table>
@@ -480,7 +423,55 @@
 							
 						</form>
 						
-					</div> <!-- End #tab2 -->        
+					</div> <!-- End #tab2 -->  
+					
+					<div id="tab3">
+						用户数量统计 
+					</div><!-- End #tab3 --> 
+					
+					<!-- 用户登陆次数统计 -->
+					<div id="tab4">
+						终端用户名：<input name="user_login_count" id="user_login_count" type="text" /><br /><br />
+						登录时间：<select name="login_time" class="small-input" onchange=user_login_count(this.value)>
+							<option value="">请选择</option>
+							<option value="1">一天内</option>
+							<option value="2">一周内</option>
+							<option value="3">一月内</option>
+						</select> 
+						<div id="login_count_div" class="login_count_div">
+						
+						</div>
+					</div><!-- End #tab4 --> 
+					
+					<!--终端数量统计  -->
+					<div id="tab5">
+						<form name="client_count_form">
+							终端区域:
+							<select id="pro_id" class="small-input" name="province_id"
+								onchange="client_area(this.value,'city_id',1);client_count();">
+								<option value="">--请选择--</option>
+					
+								<{section loop=$province_data name="ls"}>
+									<option value="<{$province_data[ls].id}>"><{$province_data[ls].pro_name}></option>
+								<{/section}>
+							</select>
+							<select id="city_id" class="small-input" name="city_id"
+								onchange="client_area(this.value,'dis_id',2);client_count();">
+								<option value="">--------</option>
+							</select>
+							<select id="dis_id" class="small-input" name="dis_id"
+								onchange="client_area(this.value,'str_id',3);client_count();">
+								<option value="">--------</option>
+							</select>
+							<select id="str_id" class="small-input" name="str_id"
+								onchange="client_count();">
+								<option value="">--------</option>
+							</select>
+						</form>
+						<div id="client_count_div" class="client_count_div">
+						
+						</div>
+					</div><!-- End #tab5 --> 
 					
 				</div> <!-- End .content-box-content -->
 				

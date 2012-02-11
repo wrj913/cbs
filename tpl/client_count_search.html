@@ -1,0 +1,29 @@
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<table>
+
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>所属地区</th>
+			<th>IPQAM_IP</th>
+			<th>终端挂载数量</th>
+		</tr>
+	</thead>
+
+	<tbody>
+		
+		<{section loop=$data name="ls"}>
+		<tr>
+			<td><{$smarty.section.ls.index+1}></td>
+			<td><{$data[ls].pro_name}> - <{$data[ls].city_name}> - <{$data[ls].dis_name}></a></td>
+			<td><{$data[ls].ip}></td>
+			<td><{$data[ls].client_count}></td>
+		</tr>
+		<{sectionelse}>
+		<tr>
+			<td colspan="6">没有数据!!!</td>
+		</tr>
+		<{/section}>
+	</tbody>
+
+</table>
