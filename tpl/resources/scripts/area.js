@@ -71,3 +71,42 @@ function showSelect(xmlData) {
 		op.value = ids[i].firstChild.nodeValue;
 	}
 }
+
+function delcfm() {
+    if (!confirm("确认要删除？")) {
+      
+        return false;
+    }
+}
+
+function add_select(sid, elementID, lx) {
+	// 不用var声明变量，并将其最先执行，该变量就具有了全局性
+	oElement = document.getElementById(elementID);
+	sArea = document.getElementById("select_dis");
+	sStreet = document.getElementById("select_street");
+	initSelect(oElement);
+//	alert(sid);
+	if (elementID == "select_city") {
+		initSelect(sArea);
+		initSelect(sStreet);
+		sArea.options[0].innerHTML = "--------";
+		sStreet.options[0].innerHTML = "--------";
+	}
+
+	if (elementID == "select_dis") {
+		initSelect(sStreet);
+		sStreet.options[0].innerHTML = "--------";
+	}
+	if (sid == "") {
+		oElement.options[0].innerHTML = "--------";
+	} else {
+		createXMLHttpRequest();
+		var url = "getData.php?type=" + lx + "&sid=" + sid;
+		xmlHttp.onreadystatechange = function() {
+			onStateChange(oElement)
+		};
+		xmlHttp.open("GET", url, true);
+		xmlHttp.send(null);
+	
+	}
+}

@@ -3,7 +3,6 @@
 
 	<thead>
 		<tr>
-			<th><input class="check-all" type="checkbox" /></th>
 			<th>ID</th>
 			<th>所属地区</th>
 			<th>IP</th>
@@ -16,7 +15,6 @@
 	<tbody>
 		<{section loop=$data name="ls"}>
 		<tr>
-			<td><input type="checkbox" /></td>
 			<td><{$data[ls].id}></td>
 			<td><{$data[ls].pro_name}> - <{$data[ls].city_name}> -
 			<{$data[ls].dis_name}></a></td>
@@ -26,10 +24,7 @@
 			<td><!-- Icons --> <a href="#" title="Edit"><img
 				src="tpl/resources/images/icons/pencil.png" alt="Edit" /></a> <a
 				href="#" title="Delete"><img
-				src="tpl/resources/images/icons/cross.png" alt="Delete" /></a> <a
-				href="#" title="Edit Meta"><img
-				src="tpl/resources/images/icons/hammer_screwdriver.png"
-				alt="Edit Meta" /></a></td>
+				src="tpl/resources/images/icons/cross.png" alt="Delete" /></a></td>
 		</tr>
 		<{sectionelse}>
 		<tr>

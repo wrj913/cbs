@@ -1,0 +1,43 @@
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<table>
+
+	<thead>
+		<tr>
+			<th>类型</th>
+			<th>异常数量</th>
+		</tr>
+
+	</thead>
+
+	<tfoot>
+		<tr>
+			<td colspan=""></td>
+			<td colspan="6">
+			<div class="pagination"><a href="#" title="First Page">&laquo;
+			First</a><a href="#" title="Previous Page">&laquo; Previous</a> <a
+				href="#" class="number" title="1">1</a> <a href="#" class="number"
+				title="2">2</a> <a href="#" class="number current" title="3">3</a> <a
+				href="#" class="number" title="4">4</a> <a href="#"
+				title="Next Page">Next &raquo;</a><a href="#" title="Last Page">Last
+			&raquo;</a></div>
+			<!-- End .pagination -->
+			<div class="clear"></div>
+			</td>
+		</tr>
+	</tfoot>
+
+	<tbody>
+		<{section loop=$data name="ls"}>
+		<tr>
+			<td><{$data[ls].type}></td>
+			<td><{$data[ls].client_exception_count}></td>
+		</tr>
+		<{sectionelse}>
+		<tr>
+			<td colspan="5">没有数据!!!</td>
+		</tr>
+		<{/section}>
+
+	</tbody>
+
+</table>

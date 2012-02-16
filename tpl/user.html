@@ -64,6 +64,7 @@
 		<![endif]-->
 		<script type="text/javascript" src="./tpl/resources/scripts/ajax_user.js"></script>
 		<script type="text/javascript" src="./tpl/resources/scripts/fun.js"></script>
+		<script type="text/javascript" src="./tpl/resources/scripts/check_value.js"></script>
 	</head>
   
 	<body><div id="body-wrapper"> <!-- Wrapper for the radial gradient background -->
@@ -95,11 +96,11 @@
 				</li>
 				
 				<li>
-					<a href="#" class="nav-top-item">
+					<a href="deliver.php" class="nav-top-item">
 						服务器管理
 					</a>
 					<ul>
-						<li><a href="#">服务器列表</a></li>
+						<li><a href="deliver.php">服务器列表</a></li>
 						<li><a href="#">服务器属性列表</a></li>
 					</ul>
 				</li>
@@ -119,7 +120,7 @@
 						故障管理
 					</a>
 					<ul>
-						<li><a href="#">服务器及终端异常列表</a></li>
+						<li><a href="exception.php">服务器及终端异常列表</a></li>
 						<li><a href="#">终端故障统计</a></li>
 					</ul>
 				</li>
@@ -249,24 +250,18 @@
 				
 				<div class="content-box-content" id="content-box-content">
 					
-					<div id="user_search_div search_div" class="user_search_div">
+					<!-- 显示查询结果 -->
+					<div id="user_search_div" class="user_search_div search_div">
 					
 					</div>
 					<!--  <div class="tab-content default-tab" id="tab1">--> 
 					<!-- This is the target div. id must match the href of this div's tab -->
 					<div id="tab1">
-						<div class="notification attention png_bg">
-							<a href="#" class="close"><img src="../tpl/resources/images/icons/cross_grey_small.png" title="Close this notification" alt="close" /></a>
-							<div>
-								This is a Content Box. You can put whatever you want in it. By the way, you can close this notification with the top-right cross.
-							</div>
-						</div>
 						
 						<table>
 							
 							<thead>
 								<tr>
-								   <th><input class="check-all" type="checkbox" /></th>
 								   <th>ID</th>
 								   <th>邮箱</th>
 								   <th>权限</th>
@@ -278,15 +273,6 @@
 							<tfoot>
 								<tr>
 									<td colspan="6">
-										<div class="bulk-actions align-left">
-											<select name="dropdown">
-												<option value="option1">选择：</option>
-												<option value="option2">编辑</option>
-												<option value="option3">删除</option>
-											</select>
-											<a class="button" href="#">提交</a>
-										</div>
-										
 										<div class="pagination">
 											<a href="#" title="First Page">&laquo; First</a><a href="#" title="Previous Page">&laquo; Previous</a>
 											<a href="#" class="number" title="1">1</a>
@@ -303,15 +289,13 @@
 							<tbody>
 								<{section loop=$data name="ls"}>
 								<tr>
-									<td><input type="checkbox" /></td>
 									<td><{$data[ls].id}></td>
 									<td><a href="#" title="title"><{$data[ls].user_email}></a></td>
 									<td><{$data[ls].user_permission}></td>
 									<td>
 										<!-- Icons -->
-										 <a href="#" title="Edit" class="user_edit"><img src="./tpl/resources/images/icons/pencil.png" alt="Edit" /></a>
-										 <a href="#" title="Delete"><img src="./tpl/resources/images/icons/cross.png" alt="Delete" /></a> 
-										 <a href="#" title="Edit Meta"><img src="./tpl/resources/images/icons/hammer_screwdriver.png" alt="Edit Meta" /></a>
+										 <a href="" title="Edit" fff="<{$data[ls].id}>" class="user_edit"><img src="./tpl/resources/images/icons/pencil.png" alt="Edit" /></a>
+										 <a href="user/user_del.php?id=<{$data[ls].id}>"  title="Delete"  onClick="return  delcfm()"><img src="./tpl/resources/images/icons/cross.png" alt="Delete" /></a> 
 									</td>
 								</tr>
 								<{sectionelse}>
@@ -325,41 +309,23 @@
 					<!-- 添加用户 -->
 					<!--  <div class="tab-content" id="tab2">-->
 					<div id="tab2">
-						<form name="user_create" action="user/user_create.php" method="post">
+						<form name="user_create" action="user/user_create.php" method="post" />
 							
-							<fieldset> <!-- Set class to "column-left" or "column-right" on fieldsets to divide the form into columns -->
-								
-								<p>
-									<label>邮箱</label>
-										<input class="text-input small-input" type="text" id="user_email" name="user_email" /> <span class="input-notification success png_bg">Successful message</span> <!-- Classes for input-notification: success, error, information, attention -->
-										<br /><small>请注意email格式</small>
-								</p>
+							<fieldset> 
+								<label>邮箱</label>
+								<input class="text-input small-input" type="text" id="user_email" 
+									name="user_email" /><br />
+								<small>请注意email格式</small>
 								
 								<p>
 									<label>密码</label>
-									<input class="text-input medium-input datepicker" type="password" id="user_password" name="user_password" /> <span class="input-notification error png_bg">Error message</span>
+									<input class="text-input medium-input datepicker" type="password" id="user_password" name="user_password" /> 
 								</p>
+								
 								<p>
 									<label>确认密码：</label>
-									<input class="text-input medium-input datepicker" type="password" id="confirm_password" name="confirm_password" /> <span class="input-notification error png_bg">Error message</span>
+									<input class="text-input medium-input datepicker" type="password" id="confirm_password" name="confirm_password" /> 
 								</p>
-		<!-- 						
-								<p>
-									<label>Large form input</label>
-									<input class="text-input large-input" type="text" id="large-input" name="large-input" />
-								</p>
-		 					
-								<p>
-									<label>是否为</label>
-									<input type="checkbox" name="checkbox1" /> 是 <input type="checkbox" name="checkbox2" /> 否
-								</p>
-			
-								<p>
-									<label>Radio buttons</label>
-									<input type="radio" name="radio1" /> This is a radio button<br />
-									<input type="radio" name="radio2" /> This is another radio button
-								</p>
-		-->			
 							
 								<p>
 									<label>用户权限</label>              
@@ -370,31 +336,9 @@
 										<option value="3">监控员</option>
 									</select> 
 								</p>
-		<!--  	
-								<p> 
-									<select id="select_city"  name="city" class="small-input" onchange="addSelect(this.value,'select_district',2);">
-                						<option value="">--------</option>
-            						</select>
-            					</p>
-            					<p> 
-									<select id="select_district" name="district" class="small-input" onchange="addSelect(this.value,'select_street',3);">
-                						<option value="">--------</option>
-            						</select>
-            					</p>
-            					<p> 
-									<select id="select_street" name="street" class="small-input" >
-                						<option value="">--------</option>
-            						</select>
-            					</p>
-					
-								<p>
-									<label>Textarea with WYSIWYG</label>
-									<textarea class="text-input textarea wysiwyg" id="textarea" name="textfield" cols="79" rows="15"></textarea>
-								</p>
-		-->							
 
 								<p>
-									<input class="button" type="submit" value="确定" />
+									<input class="button" type="submit" value="确定" onclick="return check_user_create()"/>
 								</p>
 								
 							</fieldset>
@@ -404,90 +348,34 @@
 						</form>
 						
 					</div> <!-- End #tab2 -->    
-					    
+					 
+					 <!--设置密码  -->   
 					<div id="tab3">
-						<form name="user_information" action="user/user_create.php" method="post">
+						<form name="user_edite_password" action="user/user_edite_psword.php" method="post" >
 							<fieldset> <!-- Set class to "column-left" or "column-right" on fieldsets to divide the form into columns -->
 								
 								<p>
 									<label>邮箱:</label>
-										<input class="text-input small-input" type="text" id="user_email" name="user_email" /> <span class="input-notification success png_bg">Successful message</span> <!-- Classes for input-notification: success, error, information, attention -->
+										<input class="text-input small-input" type="text" id="user_email" name="user_email_tab3"  value= "<{$user_email}>" readonly="readonly "/> 
 										<br /><small>请注意email格式</small>
 								</p>
 								<p>
 									<label>密码:</label>
-									<input class="text-input medium-input datepicker" type="password" id="user_password" name="user_password" /> <span class="input-notification error png_bg">Error message</span>
+									<input class="text-input medium-input datepicker" type="password" id="user_password" name="user_password" /> 
 								</p>
 								<p>
 									<label>确认密码：</label>
-									<input class="text-input medium-input datepicker" type="password" id="confirm_password" name="confirm_password" /> <span class="input-notification error png_bg">Error message</span>
+									<input class="text-input medium-input datepicker" type="password" id="confirm_password" name="confirm_password" /> 
 								</p>
 							</fieldset>
 								<p>
-									<input class="button" type="submit" value="确定" />
+									<input class="button" type="submit" value="确定" onclick="return check_user_create()"/>
 								</p>
 						  </form>
 					</div><!-- End #tab3 --> 
-					 
+					 <!-- 个人资料 -->
 					<div id="tab4">
-						<table>
-							
-							<thead>
-								<tr>
-								   <th><input class="check-all" type="checkbox" /></th>
-								   <th>ID</th>
-								   <th>邮箱</th>
-								   <th>权限</th>
-								   <th>编辑</th>
-								</tr>
-								
-							</thead>
-						 
-							<tfoot>
-								<tr>
-									<td colspan="6">
-										<div class="bulk-actions align-left">
-											<select name="dropdown">
-												<option value="option1">选择：</option>
-												<option value="option2">编辑</option>
-												<option value="option3">删除</option>
-											</select>
-											<a class="button" href="#">提交</a>
-										</div>
-										
-										<div class="pagination">
-											<a href="#" title="First Page">&laquo; First</a><a href="#" title="Previous Page">&laquo; Previous</a>
-											<a href="#" class="number" title="1">1</a>
-											<a href="#" class="number" title="2">2</a>
-											<a href="#" class="number current" title="3">3</a>
-											<a href="#" class="number" title="4">4</a>
-											<a href="#" title="Next Page">Next &raquo;</a><a href="#" title="Last Page">Last &raquo;</a>
-										</div> <!-- End .pagination -->
-										<div class="clear"></div>
-									</td>
-								</tr>
-							</tfoot>
-						 
-							<tbody>
-								<{section loop=$data name="ls"}>
-								<tr>
-									<td><input type="checkbox" /></td>
-									<td><{$data[ls].id}></td>
-									<td><a href="#" title="title"><{$data[ls].user_email}></a></td>
-									<td><{$data[ls].user_permission}></td>
-									<td>
-										<!-- Icons -->
-										 <a href="#" title="Edit" class="user_edit"><img src="./tpl/resources/images/icons/pencil.png" alt="Edit" /></a>
-										 <a href="#" title="Delete"><img src="./tpl/resources/images/icons/cross.png" alt="Delete" /></a> 
-										 <a href="#" title="Edit Meta"><img src="./tpl/resources/images/icons/hammer_screwdriver.png" alt="Edit Meta" /></a>
-									</td>
-								</tr>
-								<{sectionelse}>
-									<tr><td colspan="5">没有数据!!!</td></tr>
-								<{/section}> 
-							</tbody>
-							
-						</table>
+						<span>你的用户邮箱：<{$user_email}></span>
 					</div><!-- End #tab4 -->
 					
 					<!-- 区域管理 -->
@@ -514,10 +402,11 @@
 									<option value="">--------</option>
 								</select></dd>
 								<dd>
-									<label>街道：</label><input class="text-input small-input" type="text" id="street" name="street" />
+									<label>街道：</label><input class="text-input small-input" type="text" id="street" 
+										name="street" />
 								</dd>
 								<p>
-									<input class="button" type="submit" value="确定" />
+									<input class="button" type="submit" value="确定" onclick="return check_area_form()" />
 								</p>
 							</div>
 						</form>
@@ -529,86 +418,10 @@
 				</div> <!-- End .content-box-content -->
 				
 			</div> <!-- End .content-box -->
-			
-			<div class="content-box column-left">
-				
-				<div class="content-box-header">
-					
-					<h3>Content box left</h3>
-					
-				</div> <!-- End .content-box-header -->
-				
-				<div class="content-box-content">
-					
-					<div class="tab-content default-tab">
-					
-						<h4>Maecenas dignissim</h4>
-						<p>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in porta lectus. Maecenas dignissim enim quis ipsum mattis aliquet. Maecenas id velit et elit gravida bibendum. Duis nec rutrum lorem. Donec egestas metus a risus euismod ultricies. Maecenas lacinia orci at neque commodo commodo.
-						</p>
-						
-					</div> <!-- End #tab3 -->        
-					
-				</div> <!-- End .content-box-content -->
-				
-			</div> <!-- End .content-box -->
-			
-			<div class="content-box column-right closed-box">
-				
-				<div class="content-box-header"> <!-- Add the class "closed" to the Content box header to have it closed by default -->
-					
-					<h3>Content box right</h3>
-					
-				</div> <!-- End .content-box-header -->
-				
-				<div class="content-box-content">
-					
-					<div class="tab-content default-tab">
-					
-						<h4>This box is closed by default</h4>
-						<p>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in porta lectus. Maecenas dignissim enim quis ipsum mattis aliquet. Maecenas id velit et elit gravida bibendum. Duis nec rutrum lorem. Donec egestas metus a risus euismod ultricies. Maecenas lacinia orci at neque commodo commodo.
-						</p>
-						
-					</div> <!-- End #tab3 -->        
-					
-				</div> <!-- End .content-box-content -->
-				
-			</div> <!-- End .content-box -->
 			<div class="clear"></div>
 			
 			
 			<!-- Start Notifications -->
-			
-			<div class="notification attention png_bg">
-				<a href="#" class="close"><img src="./tpl/resources/images/icons/cross_grey_small.png" title="Close this notification" alt="close" /></a>
-				<div>
-					Attention notification. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vulputate, sapien quis fermentum luctus, libero. 
-				</div>
-			</div>
-			
-			<div class="notification information png_bg">
-				<a href="#" class="close"><img src="./tpl/resources/images/icons/cross_grey_small.png" title="Close this notification" alt="close" /></a>
-				<div>
-					Information notification. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vulputate, sapien quis fermentum luctus, libero.
-				</div>
-			</div>
-			
-			<div class="notification success png_bg">
-				<a href="#" class="close"><img src="./tpl/resources/images/icons/cross_grey_small.png" title="Close this notification" alt="close" /></a>
-				<div>
-					Success notification. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vulputate, sapien quis fermentum luctus, libero.
-				</div>
-			</div>
-			
-			<div class="notification error png_bg">
-				<a href="#" class="close"><img src="./tpl/resources/images/icons/cross_grey_small.png" title="Close this notification" alt="close" /></a>
-				<div>
-					Error notification. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vulputate, sapien quis fermentum luctus, libero.
-				</div>
-			</div>
-			
-			<!-- End Notifications -->
 			
 			<div id="footer">
 				<small> <!-- Remove this notice or replace it with whatever you want -->
@@ -619,51 +432,18 @@
 		</div> <!-- End #main-content -->
 		
 	</div>
+	
+	<!-- 修改用户 -->
 	<div id="edit_tab2">
-			<div class="edit_tab2_top">
-				<p>&nbsp;&nbsp;用户修改</p><a href="#" class="box_close"><img src="./tpl/resources/images/icons/cross_grey_small.png" /></a>
-				<div class="clear"> </div>
-			</div>
+		<div class="edit_tab2_top">
+			<p>&nbsp;&nbsp;用户修改</p><a href="#" class="box_close"><img src="./tpl/resources/images/icons/cross_grey_small.png" /></a>
 			<div class="clear"> </div>
-			<div class="edit_tab2_bottom">
-						<form name="user_create" action="user/user_create.php" method="post">
-							
-							<fieldset> <!-- Set class to "column-left" or "column-right" on fieldsets to divide the form into columns -->
-								
-								<p>
-									<label>邮箱</label>
-										<input class="text-input small-input" type="text" id="user_email" name="user_email" /> <span class="input-notification success png_bg">Successful message</span> <!-- Classes for input-notification: success, error, information, attention -->
-										<br /><small>请注意email格式</small>
-								</p>
-								
-								<p>
-									<label>密码</label>
-									<input class="text-input medium-input datepicker" type="password" id="user_password" name="user_password" /> <span class="input-notification error png_bg">Error message</span>
-								</p>
-								<p>
-									<label>确认密码：</label>
-									<input class="text-input medium-input datepicker" type="password" id="confirm_password" name="confirm_password" /> <span class="input-notification error png_bg">Error message</span>
-								</p>					
-								<p>
-									<label>用户权限</label>              
-									<select id="user_permission" name="user_permission" class="small-input">
-										<option value="">请选择：</option>
-										<option value="1">管理员</option>
-										<option value="2">操作员</option>
-										<option value="3">监控员</option>
-									</select> 
-								</p>
-		
-								<p>
-									<input class="button" type="submit" value="确定" />
-								</p>
-								
-							</fieldset>
-							
-							<div class="clear"></div><!-- End .clear -->							
-						</form>			
-				</div>													
-         </div>
+		</div>
+		<div class="clear"> </div>
+			<div class="edit_tab2_bottom" id="edit_tab2_bottom">
+						
+			</div>													
+       </div>
 					
 	</body>
   
@@ -700,6 +480,8 @@
 					$("body").append("<div id='greybackground'></div>");
 					var documentheight = $(document).height();
 					$("#greybackground").css({"opacity":"0.5","height":documentheight});
+					var aaa=$(this).attr("fff");
+					user_edit_tab(aaa);
 					return false;
 				});
 				$(".box_close").click(function(){

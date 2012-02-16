@@ -50,3 +50,21 @@ xmlhttp.send("search_ipqam_ip="+search_ipqam_ip+"&pro_id="+pro_id+"&city_id="+ci
 //alert(search_ipqam_ip);
 //xmlhttp.send("tag="+tag+"&applicant="+applicant+"&use_status="+use_status);
 }
+
+function user_edit_tab(ipqam_id)
+{
+var xmlhttp=getHTTPObject();
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("edit_tab2_bottom").innerHTML=xmlhttp.responseText;
+    }
+  }
+//xmlhttp.open("GET","./m_search.php?q="+str+"&s="+str_select,true);
+//xmlhttp.send();
+xmlhttp.open("POST","./ipqam/ipqam_edit.php",true);
+xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+xmlhttp.send("ipqam_id="+ipqam_id);
+//xmlhttp.send("tag="+tag+"&applicant="+applicant+"&use_status="+use_status);
+}

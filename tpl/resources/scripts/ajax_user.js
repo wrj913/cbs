@@ -42,3 +42,21 @@ xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 xmlhttp.send("user_email="+user_email);
 //xmlhttp.send("tag="+tag+"&applicant="+applicant+"&use_status="+use_status);
 }
+
+function user_edit_tab(user_id)
+{
+var xmlhttp=getHTTPObject();
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("edit_tab2_bottom").innerHTML=xmlhttp.responseText;
+    }
+  }
+//xmlhttp.open("GET","./m_search.php?q="+str+"&s="+str_select,true);
+//xmlhttp.send();
+xmlhttp.open("POST","./user/user_edit.php",true);
+xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+xmlhttp.send("user_id="+user_id);
+//xmlhttp.send("tag="+tag+"&applicant="+applicant+"&use_status="+use_status);
+}

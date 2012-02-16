@@ -5,7 +5,7 @@
 		
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		
-		<title>CSS 数据中心</title>
+		<title>云猫 数据中心</title>
 		
 		<!--                       CSS                       -->
 	  
@@ -64,6 +64,7 @@
 		<![endif]-->
 		<script type="text/javascript" src="./tpl/resources/scripts/area.js"></script>
 		<script type="text/javascript" src="./tpl/resources/scripts/ajax_ipqam.js"></script>
+		<script type="text/javascript" src="./tpl/resources/scripts/check_value.js"></script>
 	</head>
   
 	<body><div id="body-wrapper"> <!-- Wrapper for the radial gradient background -->
@@ -95,11 +96,11 @@
 				</li>
 				
 				<li>
-					<a href="#" class="nav-top-item">
+					<a href="deliver.php" class="nav-top-item">
 						服务器管理
 					</a>
 					<ul>
-						<li><a href="#">服务器列表</a></li>
+						<li><a href="deliver.php">服务器列表</a></li>
 						<li><a href="#">服务器属性列表</a></li>
 					</ul>
 				</li>
@@ -110,16 +111,16 @@
 					</a>
 					<ul>
 						<li><a class="current" href="ipqam.php">IPQAM列表</a></li>
-						<li><a href="#">IPQAM所属频点列表</a></li>
+						<li><a href="#" class=" left1" >IPQAM所属频点列表</a></li>
 					</ul>
 				</li>
 				
 				<li>
-					<a href="#" class="nav-top-item">
+					<a href="exception.php" class="nav-top-item">
 						故障管理
 					</a>
 					<ul>
-						<li><a href="#">服务器及终端异常列表</a></li>
+						<li><a href="exception.php">服务器及终端异常列表</a></li>
 						<li><a href="#">终端故障统计</a></li>
 					</ul>
 				</li>
@@ -198,9 +199,9 @@
 			</noscript>
 			
 			<!-- Page Head -->
-			<h2>Welcome John</h2>
-			<p id="page-intro">What would you like to do?</p>
-			
+			<h2>Welcome <{$user_email}></h2>
+			<p id="page-intro">欢迎使用东方网和数据中心！</p>	
+					
 			<ul class="shortcut-buttons-set">
 				
 				<li><a class="shortcut-button shortcut-button_3" href="#tab2"><span>
@@ -234,7 +235,7 @@
 					
 									<select id="selectProvince" class="small-input" name="province_id"
 										onchange="addSelect(this.value,'selectCity',1);showHint();">
-										<option value="">--请选择--</option>
+										<option value="">--省--</option>
 								
 										<{section loop=$province_data name="ls"}>
 								
@@ -243,11 +244,11 @@
 									</select>
 									<select id="selectCity" class="small-input" name="city_id"
 										onchange="addSelect(this.value,'selectArea',2);showHint();">
-										<option value="">--------</option>
+										<option value="">--市--</option>
 									</select>
 									<select id="selectArea"  class="small-input" name="dis_id"
 										onchange="addSelect(this.value,'selectStreet',3);showHint();">
-										<option value="">--------</option>
+										<option value="">--县--</option>
 									</select>
 									<select id="selectStreet" class="small-input" name="str_id" onchange="showHint();">
 										<option value="">--------</option>
@@ -259,35 +260,22 @@
 				
 				<div class="content-box-header">
 					
-					<h3>IPQAM</h3>
-		<!-- 		
-					<ul class="content-box-tabs">
-						<li><a href="#tab1" class="default-tab">Table</a></li>
-						<li><a href="#tab2">添加数据</a></li>
-					</ul>
-		 -->				
+					<h3>IPQAM</h3>			
 					<div class="clear"></div>
 					
 				</div> <!-- End .content-box-header -->
 				
 				<div class="content-box-content">
-					<div id="ipqam_search_div" class="user_search_div">
+					<div id="ipqam_search_div" class="user_search_div search_div">
 						搜索内容
 					</div>
 					<div class="tab-content default-tab" id="tab1"> <!-- This is the target div. id must match the href of this div's tab -->
 						
-						<div class="notification attention png_bg">
-							<a href="#" class="close"><img src="tpl/resources/images/icons/cross_grey_small.png" title="Close this notification" alt="close" /></a>
-							<div>
-								This is a Content Box. You can put whatever you want in it. By the way, you can close this notification with the top-right cross.
-							</div>
-						</div>
 						
 						<table>
 							
 							<thead>
 								<tr>
-								   <th><input class="check-all" type="checkbox" /></th>
 								   <th>ID</th>
 								   <th>所属地区</th>
 								   <th>IP</th>
@@ -300,15 +288,6 @@
 							<tfoot>
 								<tr>
 									<td colspan="6">
-										<div class="bulk-actions align-left">
-											<select name="dropdown">
-												<option value="option1">选择：</option>
-												<option value="option2">编辑</option>
-												<option value="option3">删除</option>
-											</select>
-											<a class="button" href="#">提交</a>
-										</div>
-										
 										<div class="pagination">
 											<a href="#" title="First Page">&laquo; First</a><a href="#" title="Previous Page">&laquo; Previous</a>
 											<a href="#" class="number" title="1">1</a>
@@ -325,17 +304,15 @@
 							<tbody>
 								<{section loop=$data name="ls"}>
 								<tr>
-									<td><input type="checkbox" /></td>
 									<td><{$data[ls].id}></td>
-									<td><{$data[ls].pro_name}> - <{$data[ls].city_name}> - <{$data[ls].dis_name}></a></td>
+									<td><{$data[ls].pro_name}> - <{$data[ls].city_name}> - <{$data[ls].dis_name}>-<{$data[ls].str_name}></a></td>
 									<td><a href="#" title="title"><{$data[ls].ip}></a></td>
 									<td><{$data[ls].port}></td>
 									<td><{$data[ls].available}></td>
 									<td>
 										<!-- Icons -->
-										 <a href="#" title="Edit"><img src="tpl/resources/images/icons/pencil.png" alt="Edit" /></a>
-										 <a href="#" title="Delete"><img src="tpl/resources/images/icons/cross.png" alt="Delete" /></a> 
-										 <a href="#" title="Edit Meta"><img src="tpl/resources/images/icons/hammer_screwdriver.png" alt="Edit Meta" /></a>
+										 <a href="#" title="Edit"><img src="tpl/resources/images/icons/pencil.png" alt="Edit" fff="<{$data[ls].id}>" class="ipqam_edit" /></a>
+										 <a href="ipqam/ipqam_del.php?id=<{$data[ls].id}>" title="Delete" onClick=" return  delcfm()"><img src="tpl/resources/images/icons/cross.png" alt="Delete" /></a> 
 									</td>
 								</tr>
 								<{sectionelse}>
@@ -356,28 +333,23 @@
 								
 								<p>
 									<label>IPQAM IP</label>
-										<input class="text-input small-input" type="text" id="small-input" name="ipqam_ip" /> <span class="input-notification success png_bg">Successful message</span> <!-- Classes for input-notification: success, error, information, attention -->
+										<input class="text-input small-input" type="text" id="small-input" name="ipqam_ip" /> 
 										<br /><small>请注意IP地址格式</small>
 								</p>
 								
 								<p>
 									<label>端口号</label>
-									<input class="text-input medium-input datepicker" type="text" id="medium-input" name="ipqam_port" /> <span class="input-notification error png_bg">Error message</span>
+									<input class="text-input medium-input datepicker" type="text" id="medium-input" name="ipqam_port" /> 
 								</p>
-		<!-- 						
-								<p>
-									<label>Large form input</label>
-									<input class="text-input large-input" type="text" id="large-input" name="large-input" />
-								</p>
-		 -->						
+								
 								<p>
 									<label>是否立即启用</label>
-									<input type="radio" name="available" value="1" /> 是 <input type="radio" name="available" value="0" /> 否
+									<input type="radio" name="avail" value="1" checked="checked"/> 是 <input type="radio" name="avail" value="0" /> 否
 								</p>
 
 									<label>IPQAM区域</label>
-									<select id="selectProvince" class="small-input" name="province_id"
-										onchange="addSelect(this.value,'selectCity',1);">
+									<select id="select_province" class="small-input" name="province_id"
+										onchange="add_select(this.value,'select_city',1);">
 										<option value="">--请选择--</option>
 								
 										<{section loop=$province_data name="ls"}>
@@ -385,19 +357,19 @@
 										<option value="<{$province_data[ls].id}>"><{$province_data[ls].pro_name}></option>
 										<{/section}>
 									</select>
-									<select id="selectCity" class="small-input" name="city_id"
-										onchange="addSelect(this.value,'selectArea',2);">
+									<select id="select_city" class="small-input" name="city_id"
+										onchange="add_select(this.value,'select_dis',2);">
 										<option value="">--------</option>
 									</select>
-									<select id="selectArea"  class="small-input" name="dis_id"
-										onchange="addSelect(this.value,'selectStreet',3);">
+									<select id="select_dis"  class="small-input" name="dis_id"
+										onchange="add_select(this.value,'select_street',3);">
 										<option value="">--------</option>
 									</select>
-									<select id="selectStreet" class="small-input" name="str_id">
+									<select id="select_street" class="small-input" name="str_id">
 										<option value="">--------</option>
 									</select>
 									<p>
-										<input class="button" type="submit" value="确定" />
+										<input class="button" type="submit" value="确定" onclick=" return check_ipqam_cteate()"/>
 									</p>
 								</fieldset>
 							
@@ -405,95 +377,59 @@
 							
 						</form>
 						
-					</div> <!-- End #tab2 -->        
-					
-				</div> <!-- End .content-box-content -->
-				
-			</div> <!-- End .content-box -->
-			
-			<div class="content-box column-left">
-				
-				<div class="content-box-header">
-					
-					<h3>Content box left</h3>
-					
-				</div> <!-- End .content-box-header -->
-				
-				<div class="content-box-content">
-					
-					<div class="tab-content default-tab">
-					
-						<h4>Maecenas dignissim</h4>
-						<p>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in porta lectus. Maecenas dignissim enim quis ipsum mattis aliquet. Maecenas id velit et elit gravida bibendum. Duis nec rutrum lorem. Donec egestas metus a risus euismod ultricies. Maecenas lacinia orci at neque commodo commodo.
-						</p>
-						
-					</div> <!-- End #tab3 -->        
-					
-				</div> <!-- End .content-box-content -->
-				
-			</div> <!-- End .content-box -->
-			
-			<div class="content-box column-right closed-box">
-				
-				<div class="content-box-header"> <!-- Add the class "closed" to the Content box header to have it closed by default -->
-					
-					<h3>Content box right</h3>
-					
-				</div> <!-- End .content-box-header -->
-				
-				<div class="content-box-content">
-					
-					<div class="tab-content default-tab">
-					
-						<h4>This box is closed by default</h4>
-						<p>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in porta lectus. Maecenas dignissim enim quis ipsum mattis aliquet. Maecenas id velit et elit gravida bibendum. Duis nec rutrum lorem. Donec egestas metus a risus euismod ultricies. Maecenas lacinia orci at neque commodo commodo.
-						</p>
-						
-					</div> <!-- End #tab3 -->        
+					</div> <!-- End #tab2 --> 
+					       
+					<div id="tab3">
+						<table>
+							
+							<thead>
+								<tr>
+								   <th>IPQAM IP</th>
+								   <th>所属频点</th>
+								   <th>端口号</th>
+								</tr>
+							</thead>
+						 
+							<tfoot>
+								<tr>
+									<td colspan="6">
+										<div class="pagination">
+											<a href="#" title="First Page">&laquo; First</a><a href="#" title="Previous Page">&laquo; Previous</a>
+											<a href="#" class="number" title="1">1</a>
+											<a href="#" class="number" title="2">2</a>
+											<a href="#" class="number current" title="3">3</a>
+											<a href="#" class="number" title="4">4</a>
+											<a href="#" title="Next Page">Next &raquo;</a><a href="#" title="Last Page">Last &raquo;</a>
+										</div> <!-- End .pagination -->
+										<div class="clear"></div>
+									</td>
+								</tr>
+							</tfoot>
+						 
+							<tbody>
+								<{section loop=$channel_data name="ls"}>
+								<tr>
+									<td><{$channel_data[ls].ip}></td>
+									<td><{$channel_data[ls].freq}></a></td>
+									<td><{$channel_data[ls].port}></td>
+								</tr>
+								<{sectionelse}>
+									<tr><td colspan="5">没有数据!!!</td></tr>
+								<{/section}> 
+								
+							</tbody>
+							
+						</table>
+					</div> <!-- End tab3 -->
 					
 				</div> <!-- End .content-box-content -->
 				
 			</div> <!-- End .content-box -->
 			<div class="clear"></div>
 			
-			
-			<!-- Start Notifications -->
-			
-			<div class="notification attention png_bg">
-				<a href="#" class="close"><img src="tpl/resources/images/icons/cross_grey_small.png" title="Close this notification" alt="close" /></a>
-				<div>
-					Attention notification. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vulputate, sapien quis fermentum luctus, libero. 
-				</div>
-			</div>
-			
-			<div class="notification information png_bg">
-				<a href="#" class="close"><img src="tpl/resources/images/icons/cross_grey_small.png" title="Close this notification" alt="close" /></a>
-				<div>
-					Information notification. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vulputate, sapien quis fermentum luctus, libero.
-				</div>
-			</div>
-			
-			<div class="notification success png_bg">
-				<a href="#" class="close"><img src="tpl/resources/images/icons/cross_grey_small.png" title="Close this notification" alt="close" /></a>
-				<div>
-					Success notification. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vulputate, sapien quis fermentum luctus, libero.
-				</div>
-			</div>
-			
-			<div class="notification error png_bg">
-				<a href="#" class="close"><img src="tpl/resources/images/icons/cross_grey_small.png" title="Close this notification" alt="close" /></a>
-				<div>
-					Error notification. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vulputate, sapien quis fermentum luctus, libero.
-				</div>
-			</div>
-			
-			<!-- End Notifications -->
-			
 			<div id="footer">
 				<small> <!-- Remove this notice or replace it with whatever you want -->
-						&#169; Copyright 2009 Your Company | Powered by <a href="http://themeforest.net/item/simpla-admin-flexible-user-friendly-admin-skin/46073">Simpla Admin</a> | <a href="#">Top</a>
+						&#169; Copyright (C) 2011 East Connected Ltd 
 				</small>
 			</div><!-- End #footer -->
 			
@@ -501,8 +437,62 @@
 		
 	</div>
 	
+	<!-- 修改IPQAM -->
+	<div id="edit_tab2">
+		<div class="edit_tab2_top">
+			<p>&nbsp;&nbsp;IPQAM修改</p><a href="#" class="box_close"><img src="./tpl/resources/images/icons/cross_grey_small.png" /></a>
+			<div class="clear"> </div>
+		</div>
+		<div class="clear"> </div>
+			<div class="edit_tab2_bottom" id="edit_tab2_bottom">
+						
+			</div>													
+       </div>
+	
 	</body>
-  
+  <script>
+			$(function(){
+				
+				$("#edit_tab2").hide();
+				var screenwidth,screenheight,mytop,getPosLeft,getPosTop;
+				screenwidth = $(window).width();				
+				screenheight = $(window).height();				
+				mytop = $(document).scrollTop();
+				getPosLeft = screenwidth/2-260;
+				getPosTop = screenheight/2-180;
+				$("#edit_tab2").css({"left":getPosLeft,"top":getPosTop});
+				$(window).resize(function(){
+					screenwidth = $(window).width();
+					screenheight = $(window).height();
+					mytop = $(document).scrollTop();
+					getPosLeft = screenwidth/2-260;
+					getPosTop = screenheight/2-180;
+					$("#edit_tab2").css({"left":getPosLeft,"top":getPosTop+mytop});
+				});
+				$(window).scroll(function(){
+					screenwidth = $(window).width();
+					screenheight = $(window).height();
+					mytop = $(document).scrollTop();
+					getPosLeft = screenwidth/2-260;
+					getPosTop = screenheight/2-180;
+					$("#edit_tab2").css({"left":getPosLeft,"top":getPosTop+mytop});
+				});
+				$(".ipqam_edit").click(function(){
+					
+					$("#edit_tab2").fadeIn("fast");
+					$("body").append("<div id='greybackground'></div>");
+					var documentheight = $(document).height();
+					$("#greybackground").css({"opacity":"0.5","height":documentheight});
+					var aaa=$(this).attr("fff");
+					user_edit_tab(aaa);
+					return false;
+				});
+				$(".box_close").click(function(){
+					$("#edit_tab2").hide();
+					$("#greybackground").remove();
+					return false;
+				});
+			});
+		</script>
 
 <!-- Download From www.exet.tk-->
-</html>

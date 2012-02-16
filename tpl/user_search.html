@@ -1,7 +1,6 @@
 <table>
 	<thead>
 		<tr>
-			<th><input class="check-all" type="checkbox" /></th>
 			<th>ID</th>
 			<th>邮箱</th>
 			<th>权限</th>
@@ -11,7 +10,6 @@
 	<tbody>
 		<{section loop=$data name="ls"}>
 		<tr>
-			<td><input type="checkbox" /></td>
 			<td><{$data[ls].id}></td>
 			<td><a href="#" title="title"><{$data[ls].user_email}></a></td>
 			<td><{$data[ls].user_permission}></td>

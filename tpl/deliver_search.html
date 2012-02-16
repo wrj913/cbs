@@ -1,0 +1,36 @@
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<table>
+
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>所属地区</th>
+			<th>IP</th>
+			<th>端口号</th>
+			<th>是否可用</th>
+			<th>编辑</th>
+		</tr>
+	</thead>
+	
+	<tbody>
+		<{section loop=$data name="ls"}>
+		<tr>
+			<td><{$data[ls].id}></td>
+			<td><{$data[ls].pro_name}> - <{$data[ls].city_name}> -
+			<{$data[ls].dis_name}> - <{$data[ls].str_name}></a></td>
+			<td><a href="#" title="title"><{$data[ls].ip}></a></td>
+			<td><{$data[ls].vpn_port}></td>
+			<td><{$data[ls].access_points_count}></td>
+			<td><!-- Icons --> <a href="#" title="Edit"><img
+				src="tpl/resources/images/icons/pencil.png" alt="Edit" /></a> <a
+				href="#" title="Delete"><img
+				src="tpl/resources/images/icons/cross.png" alt="Delete" /></a></td>
+		</tr>
+		<{sectionelse}>
+		<tr>
+			<td colspan="6">没有数据!!!</td>
+		</tr>
+		<{/section}>
+	</tbody>
+
+</table>

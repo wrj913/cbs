@@ -1,0 +1,52 @@
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<table>
+
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>类型</th>
+			<th>IP</th>
+			<th>MAC地址</th>
+			<th>故障信息</th>
+			<th>时间</th>
+		</tr>
+
+	</thead>
+
+	<tfoot>
+		<tr>
+			<td colspan=""></td>
+			<td colspan="6">
+			<div class="pagination"><a href="#" title="First Page">&laquo;
+			First</a><a href="#" title="Previous Page">&laquo; Previous</a> <a
+				href="#" class="number" title="1">1</a> <a href="#" class="number"
+				title="2">2</a> <a href="#" class="number current" title="3">3</a> <a
+				href="#" class="number" title="4">4</a> <a href="#"
+				title="Next Page">Next &raquo;</a><a href="#" title="Last Page">Last
+			&raquo;</a></div>
+			<!-- End .pagination -->
+			<div class="clear"></div>
+			</td>
+		</tr>
+	</tfoot>
+
+	<tbody>
+
+		<{section loop=$data name="ls"}>
+		<tr>
+			<td><{$data[ls].id}></td>
+			<td><{$data[ls].type}></td>
+			<td><{$data[ls].ip}></td>
+			<td><{$data[ls].mac}></td>
+			<td><{$data[ls].content}></td>
+			<td><{$data[ls].created_at}></td>
+		</tr>
+		<{sectionelse}>
+		<tr>
+			<td colspan="5">没有数据!!!</td>
+		</tr>
+		<{/section}>
+
+	</tbody>
+
+</table>

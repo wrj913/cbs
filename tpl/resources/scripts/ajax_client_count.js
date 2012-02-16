@@ -103,18 +103,103 @@ function client_count() {
 	//xmlhttp.send("tag="+tag+"&applicant="+applicant+"&use_status="+use_status);
 }
 
-function user_login_count(days) {
+
+//function user_login_count(login_day,client_user) {
+////	alert(check_user(client_user));
+////	if(!check_user(client_user)){
+////		
+////		return false;
+////	}
+//
+//	
+//	var xmlhttp=getHTTPObject();
+//	xmlhttp.onreadystatechange=function()
+//	  {
+//	  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+//	    {
+//	    document.getElementById("login_count_div").innerHTML=xmlhttp.responseText;
+//	    }
+//	  }
+//	xmlhttp.open("POST","./client/user_login_count.php",true);
+//	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+//	xmlhttp.send("client_user="+client_user+"&login_day="+login_day);
+//	return false;
+//}
+
+/*
+ * 检查用户是否存在
+ */
+
+function user_login_count(){
+
+	var user_tab4 = document.getElementById("client_user_tab4").value.trim();
+	var login_time = document.getElementById("login_time").value;
+	if(user_tab4==""||login_time==""){
+		return false;
+	}
+	
 	var xmlhttp=getHTTPObject();
-	xmlhttp.onreadystatechange=function()
-	  {
-	  if (xmlhttp.readyState==4 && xmlhttp.status==200)
-	    {
-	    document.getElementById("login_count_div").innerHTML=xmlhttp.responseText;
-	    }
+	xmlhttp.onreadystatechange=function(){		
+		if (xmlhttp.readyState==4 && xmlhttp.status==200){
+		    if(xmlhttp.responseText==1){
+		    	alert(xmlhttp.responseText);
+		    	var xmlhttp2=getHTTPObject();
+		    	xmlhttp2.onreadystatechange=function()
+		    	  {
+		    	  if (xmlhttp2.readyState==4 && xmlhttp2.status==200)
+		    	    {
+		    	    document.getElementById("login_count_tab4").innerHTML=xmlhttp2.responseText;
+		    	    
+		    	    }
+		    	  }
+		    	xmlhttp2.open("POST","./client/user_login_count.php",true);
+		    	xmlhttp2.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		    	xmlhttp2.send("client_user="+user_tab4+"&login_day="+login_time);
+		    	return false;
+		    }else{
+		    	var user_tab4=document.getElementById("user_tab4");
+				user_tab4.style.display="block";
+		    }
+	    }	
 	  }
-	xmlhttp.open("POST","./client/client_count_search.php",true);
+	xmlhttp.open("POST","./user/check_user.php",true);
 	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-	xmlhttp.send("pro_id="+pro_id+"&city_id="+city_id+"&dis_id="+dis_id);
-	alert(days);
-	return false;
+	xmlhttp.send("user_name="+user_tab4);
+}
+
+function check_user_tab3(obj) {
+
+	var user_name = obj.value.trim();
+	if (user_name == "") {
+		return false;
+	}
+	
+	var xmlhttp = getHTTPObject();
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			if (xmlhttp.responseText == 1) {
+				//alert(user_name);
+				//	document.getElementById("client_count_div").innerHTML=xmlhttp.responseText;
+
+				var xmlhttp1 = getHTTPObject();
+				xmlhttp1.onreadystatechange = function() {
+					if (xmlhttp1.readyState == 4 && xmlhttp1.status == 200) {
+						document.getElementById("login_count_tab3").innerHTML = xmlhttp1.responseText;
+					}
+				}
+				xmlhttp1.open("POST", "./client/user_login_count.php", true);
+				xmlhttp1.setRequestHeader("Content-type",
+						"application/x-www-form-urlencoded");
+				xmlhttp1.send("user_name=" + user_name);
+				return false;
+			} else {
+				var user_tab4 = document.getElementById("user_tab3");
+				user_tab4.style.display = "block";
+			}
+		}
+	}
+
+xmlhttp.open("POST", "./user/check_user.php", true);
+xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+xmlhttp.send("user_name=" + user_name);
 }

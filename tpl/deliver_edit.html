@@ -1,0 +1,56 @@
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<form name="deliver_cteate" action="deliver/deliver_create.php" method="post">
+							
+							<fieldset> <!-- Set class to "column-left" or "column-right" on fieldsets to divide the form into columns -->
+								
+								<p>
+									<label>服务器 IP</label>
+										<input class="text-input small-input" type="text" id="small-input"
+											 name="deliver_ip" /> 
+										<br /><small>请注意IP地址格式</small>
+								</p>
+								
+								<p>
+									<label>端口号</label>
+									<input class="text-input medium-input datepicker" type="text" id="medium-input" name="vpn_port" /> 
+								</p>
+		<!-- 						
+								<p>
+									<label>Large form input</label>
+									<input class="text-input large-input" type="text" id="large-input" name="large-input" />
+								</p>
+		 -->						
+								<p>
+									<label>是否立即启用</label>
+									<input type="radio" name="available" value="1" checked="checked"/> 是 <input type="radio" name="available" value="0" /> 否
+								</p>
+
+									<label>服务器区域</label>
+									<select id="select_province" class="small-input" name="province_id"
+										onchange="add_select(this.value,'select_city',1);">
+										<option value="">--请选择--</option>
+								
+										<{section loop=$province_data name="ls"}>
+								
+										<option value="<{$province_data[ls].id}>"><{$province_data[ls].pro_name}></option>
+										<{/section}>
+									</select>
+									<select id="select_city" class="small-input" name="city_id"
+										onchange="add_select(this.value,'select_dis',2);">
+										<option value="">--------</option>
+									</select>
+									<select id="select_dis"  class="small-input" name="dis_id"
+										onchange="add_select(this.value,'select_street',3);">
+										<option value="">--------</option>
+									</select>
+									<select id="select_street" class="small-input" name="str_id">
+										<option value="">--------</option>
+									</select>
+									<p>
+										<input class="button" type="submit" value="确定" onclick="return check_deliver_cteate()" />
+									</p>
+								</fieldset>
+							
+							<div class="clear"></div><!-- End .clear -->
+							
+						</form>

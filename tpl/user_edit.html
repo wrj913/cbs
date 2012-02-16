@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<form name="user_edite" action="user/user_edit.php" method="post">
+
+	<fieldset>
+	<{section loop=$data name="ls"}>
+		<p><label>邮箱</label> 
+			<input class="text-input small-input" type="text" id="user_email" name="user_email" value="<{$data[ls].user_email}>"/> 
+			<input name="id" type="hidden" value="<{$data[ls].id}>" /> <br />
+			<small>请注意email格式</small>
+		</p>
+		
+		<p><label>密码</label> <input
+			class="text-input medium-input datepicker" type="password" id="user_password" name="user_password" value="<{$data[ls].user_password}>" /> 
+		</p>
+		<p>
+			<label>确认密码：</label> 
+			<input class="text-input medium-input datepicker" type="password" id="confirm_password" name="confirm_password" value="<{$data[ls].user_password}>"/> 
+		</p>
+		<p>
+			<label>用户权限</label>
+			<select id="user_permission" name="user_permission" class="small-input">
+				<option value="">请选择：</option>
+				<{if $data[ls].user_permission==1}>
+				<option value="1" selected="selected">管理员</option>
+				<{else}>
+				<option value="1" selected="selected">管理员</option>
+				<{/if}>
+				<{if $data[ls].user_permission==2}>
+				<option value="2" selected="selected">操作员</option>
+				<{else}>
+				<option value="2">操作员</option>
+				<{/if}>
+				<{if $data[ls].user_permission==3}>
+				<option value="3" selected="selected">监控员</option>
+				<{else}>
+				<option value="3">监控员</option>
+				<{/if}>
+			</select>
+		</p>
+		<p><input class="button" type="submit" value="确定" /></p>
+	<{/section}>
+	</fieldset>
+
+	<div class="clear"></div>
+</form>

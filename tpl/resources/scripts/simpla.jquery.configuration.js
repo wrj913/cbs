@@ -9,7 +9,7 @@ $(document).ready(function(){
 			function () {
 				$(this).parent().siblings().find("ul").slideUp("normal"); // Slide up all sub menus except the one clicked
 				$(this).next().slideToggle("normal"); // Slide down the clicked sub menu
-				return false;
+				//return false;
 			}
 		);
 		
@@ -61,6 +61,9 @@ $(document).ready(function(){
 //				return false; 
 //			}
 //		);
+		//隐藏提示框
+		$(".user_tab4").hide();
+		
 		$("#tab1").show();
 		$("#tab2").hide();
 		$("#tab3").hide();

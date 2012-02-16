@@ -1,3 +1,10 @@
+function delcfm() {
+    if (!confirm("确认要删除？")) {
+      
+        return false;
+    }
+}
+
 var xmlHttp;
 function createXMLHttpRequest() {
     if (window.ActiveXObject) {
@@ -65,3 +72,5 @@ function showSelect(xmlData) {
 	   
     }
 }
+
+
